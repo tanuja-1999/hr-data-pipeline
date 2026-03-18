@@ -1,6 +1,6 @@
 # HR Extract Pipeline — Setup & Development Guide
 
-## 📌 Purpose of This Document
+## 📌 Purpose of This Document :
 
 This document provides a **step-by-step guide** to set up and build the project from scratch, along with **clear explanations of why each step is performed**.
 
