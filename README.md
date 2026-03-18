@@ -81,12 +81,127 @@ hr_extract_pipeline
 
 ## 🧠 Data Modeling Approach
 
-The project follows **Kimball’s Dimensional Modeling methodology**:
+✅ Step 1 — Identify the Business Process
 
-1. Identify business processes
-2. Define grain (level of detail)
-3. Identify dimensions
-4. Define facts (metrics)
+refer business objective line 13
+
+✅ Step 2 — Define the Grain (Most Critical Step)
+Objective
+
+Define what one row represents in each fact table.
+
+Important Insight
+
+This project involves multiple business events, so we define multiple fact tables, each with a clear and consistent grain.
+
+Fact Tables and Their Grains
+1. Workforce Snapshot
+1 row = 1 employee per month
+
+Used for:
+
+Active employees
+
+Managers
+
+Department analysis
+
+2. Hiring Events
+1 row = 1 employee hire event
+
+Used for:
+
+New hires
+
+Hiring trends
+
+3. Performance Reviews
+1 row = 1 employee performance review
+
+Used for:
+
+High performer ratio
+
+4. Recruiting Costs
+1 row = 1 recruiting resource per month
+
+Used for:
+
+Cost per hire
+
+Cost analysis by source
+
+Why Multiple Fact Tables?
+
+Each KPI represents a different type of business event:
+
+KPI	Required Grain
+Active Employees	employee per month
+New Hires	hire event
+Performance	review event
+Recruiting Cost	resource per month
+
+👉 Mixing these into one table leads to:
+
+duplicate counts
+
+incorrect aggregations
+
+complex queries
+
+✅ Step 3 — Identify Dimensions
+Objective
+
+Define descriptive attributes that provide context to facts.
+
+Dimensions Identified
+
+dim_employee → employee details
+
+dim_department → department classification
+
+dim_date → time-based analysis
+
+dim_job → job roles
+
+dim_manager → hierarchy relationships
+
+dim_recruiting_source → recruiting channels
+
+Purpose
+
+Dimensions enable:
+
+filtering (e.g., by department)
+
+grouping (e.g., by month)
+
+slicing data for analysis
+
+✅ Step 4 — Identify Facts (Metrics)
+Objective
+
+Define measurable business metrics.
+
+Facts Identified
+
+Employee active flag
+
+Hire count
+
+Performance rating
+
+Recruiting cost
+
+Example Metrics
+
+Total active employees
+
+High performer ratio
+
+Cost per hire
+
+Number of direct reports
 
 ### Star Schema Design
 
