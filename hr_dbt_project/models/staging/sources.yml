@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: hr_raw
+    database: HR_DB
+    schema: RAW
+    tables:
+      - name: employees
+      - name: performance_reviews_2023
+      - name: recruiting_costs_2023
