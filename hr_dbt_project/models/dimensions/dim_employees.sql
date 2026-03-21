@@ -32,14 +32,27 @@ final as (
         recruiting_source,
         hire_date,
         termination_date,
+        case 
+        when lower(trim(
+            replace(employee_name, '.', '')
+        )) in (
+            select distinct lower(trim(
+                replace(manager_name, '.', '')
+            ))
+            from {{ ref('stg_employees') }}
+        ) then employee_sk 
+        end as manager_id,
         manager_name,
         case 
-    when employee_name in (
-        select distinct manager_name 
-        from {{ ref('stg_employees') }}
-    ) then 1 else 0
-end as is_manager
-
+        when lower(trim(
+            replace(employee_name, '.', '')
+        )) in (
+            select distinct lower(trim(
+                replace(manager_name, '.', '')
+            ))
+            from {{ ref('stg_employees') }}
+        ) then 1 else 0
+        end as is_manager
     from employee_base e
 
 )

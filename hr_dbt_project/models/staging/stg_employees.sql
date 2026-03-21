@@ -9,7 +9,8 @@ cleaned as (
 
     select
         cast(employeenumber as string) as employee_id,
-        employeename as employee_name,
+        
+        split_part(employeename, ',', 2) || ' ' || split_part(employeename, ',', 1) as employee_name,
 
         -- org
         trim(department) as department,
