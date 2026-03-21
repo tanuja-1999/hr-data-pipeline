@@ -1,25 +1,38 @@
-SELECT
-    EMPLOYEENUMBER       AS employee_id,
-    EMPLOYEENAME         AS employee_name,
+with source as (
 
-    -- org details
-    LOWER(DEPARTMENT)    AS department,
-    LOWER(POSITION)      AS position,
-    MANAGERNAME          AS manager_name,
+    select * 
+    from {{ source('hr_raw', 'employees') }}
 
-    -- employment
-    LOWER(EMPLOYMENTSTATUS) AS employee_status,
-    DATEOFHIRE           AS hire_date,
-    DATEOFTERMINATION    AS termination_date,
+),
 
-    -- recruiting
-    LOWER(RECRUITINGRESOURCE) AS recruiting_source,
+cleaned as (
 
-    -- demographics (optional)
-    AGE                  AS age,
-    LOWER(SEX)           AS gender,
-    LOWER(MARITALDESC)   AS marital_status,
-    LOWER(CITIZENDESC)   AS citizenship,
-    LOWER(RACEDESC)      AS race
+    select
+        cast(employeenumber as string) as employee_id,
+        employeename as employee_name,
 
-FROM {{ source('hr_raw', 'employees') }}
+        -- org
+        trim(department) as department,
+        trim(position) as position,
+        managername as manager_name,
+
+        -- employment
+        trim(employmentstatus) as employment_status,
+        cast(dateofhire as date) as hire_date,
+        cast(dateoftermination as date) as termination_date,
+
+        -- recruiting
+        trim(recruitingresource) as recruiting_source,
+
+        -- demographics
+        age,
+        trim(sex) as gender,
+        trim(maritaldesc) as marital_status,
+        trim(citizendesc) as citizenship,
+        trim(racedesc) as race
+
+    from source
+
+)
+
+select * from cleaned
